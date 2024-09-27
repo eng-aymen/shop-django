@@ -1,0 +1,102 @@
+{% extends 'admin/base.html' %}
+
+{% load static %}
+{% block branding %}
+<div class="row">
+  <div class="col">
+    <img src="{% static 'img/cart-2.png' %}" width="80px" height="70px">
+  </div>
+  <div class="col" style="margin: 11px;">
+    <h1 id="head">
+      الطلبات
+    </h1>
+  </div>
+
+
+</div>
+
+{% endblock %}
+
+{% block extrastyle %}
+
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+{% endblock %}
+{% block content %}
+<div class="site-section bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-7">
+        <h2 class="section-heading"><a href="{% url 'order' %}"><strong>قائمة الطلبات</strong></a></h2>
+        <hr>
+        <u><h3 class="text-right" >تفاصيل الطلبية</h3></u>
+        <br><br><br>
+      </div>
+    </div>
+    <h5 class="text-center">
+       <span class="my-num">{{order.user.first_name|add:' '|add:order.user.last_name}}</span> : الاســـم
+
+      
+      <br>
+      <span class="my-num">${{total}}</span> : أجمالي السعر
+<br>
+       <span class="my-num">{{order.id}}</span> : رقم الطلب 
+<br>
+       <span class="my-num">{{order_details.count}}</span> : المنتجات
+
+  </h5>
+  <hr>
+
+  <!-- Cart Start -->
+  <div class="container">
+      <div class="row px-xl-5">
+          <!-- <div class="col-lg-8 table-responsive mb-5"> -->
+              <table class="table table-light table-borderless  text-center mb-0">
+                  <thead class="thead-dark">
+                      <tr>
+                          <th>صورة</th>
+                          <th>المنتجات</th>
+                          <th>السعر</th>
+                          <th>الكمية</th>
+                          <th>الإجمالي</th>
+                      </tr>
+                  </thead>
+                  <tbody style="background-color: white;">
+                    
+                      {% for p in order_details %}
+                      <tr>
+                          <td class="align-middle text-warning"><img src="{{p.product.img.url}}" alt="" style="width: 100px;height: 100px;"></td>
+                          <td class="align-middle text-warning"><b>{{p.product.p_name}}</b></td></b>
+                          <td class="align-middle text-warning"><b>${{p.price}}</b></td></b>
+                          <td class="align-middle text-warning"></b>
+                              <div class="input-group quantity mx-auto" style="width: 100px;">
+                                  
+                                  <input type="text" readonly="1" class="form-control form-control-sm bg-secondary border-0 text-center" value="{{p.quantity}}">
+                                  
+                              </div>
+                          </td>
+                          <td class="align-middle text-warning"><b>${% widthratio p.quantity 1 p.price %}</b></td>
+                      </tr>
+                      {% empty %}
+              <h5 class="alert alert-warning text-center">لايوجد أي طلب حالي</h5>
+                      {% endfor %}
+                      
+                  </tbody>
+              </table>
+          <!-- </div> -->
+  </div>
+</div>
+
+
+
+
+<div class="site-section bg-primary py-5 mt-5">
+  <div class="container">
+    <h2 class="mb-0 text-white text-center">متـــــجــــــــــــــــــر سلـــتـــــــــــــــــي</h2>
+  </div>
+</div>
+
+
+</div>
+{% endblock %}

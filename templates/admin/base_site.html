@@ -1,0 +1,24 @@
+{% extends 'admin/base.html' %}
+{% load static %}
+{% block branding %}
+<div class="row">
+    <div class="col">
+        <img src="{% static 'img/cart-2.png' %}" width="80px" height="70px">
+    </div>
+    <div class="col" style="margin: 11px;">
+        <h1 id="head">
+            متجر سلتي
+        </h1>
+    </div>
+    
+    
+</div>
+
+{% endblock %}
+{% block nav-global %}
+    <a  href="{% url 'order' %}">الطلبات</a>
+{% endblock %}
+
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+{% endblock %}

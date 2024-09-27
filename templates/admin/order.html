@@ -1,0 +1,249 @@
+{% extends 'admin/base.html' %}
+
+{% load static %}
+{% block branding %}
+<div class="row">
+  <div class="col">
+    <img src="{% static 'img/cart-2.png' %}" width="80px" height="70px">
+  </div>
+  <div class="col" style="margin: 11px;">
+    <h1 id="head">
+     الطلبات
+    </h1>
+  </div>
+
+
+</div>
+
+{% endblock %}
+
+{% block extrastyle %}
+
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+{% endblock %}
+{% block content %}
+<style>
+  .ag-format-container {
+      width: 1142px;
+      margin: 0 auto;
+  }
+
+
+
+  .ag-courses_box {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: start;
+      -ms-flex-align: start;
+      align-items: flex-start;
+      -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+
+      padding: 50px 0;
+  }
+
+  .ag-courses_item {
+      -ms-flex-preferred-size: calc(33.33333% - 30px);
+      flex-basis: calc(33.33333% - 30px);
+
+      margin: 0 15px 30px;
+
+      overflow: hidden;
+
+      border-radius: 28px;
+  }
+
+  .ag-courses-item_link {
+      display: block;
+      padding: 30px 20px;
+      background-color: #121212;
+
+      overflow: hidden;
+
+      position: relative;
+  }
+
+  .ag-courses-item_link:hover,
+  .ag-courses-item_link:hover .ag-courses-item_date {
+      text-decoration: none;
+      color: #FFF;
+  }
+
+  .ag-courses-item_link:hover .ag-courses-item_bg {
+      -webkit-transform: scale(10);
+      -ms-transform: scale(10);
+      transform: scale(10);
+  }
+
+  .ag-courses-item_title {
+      min-height: 40px;
+      margin: 0 0 25px;
+
+      overflow: hidden;
+
+      font-weight: bold;
+      font-size: 30px;
+      color: #FFF;
+
+      z-index: 2;
+      position: relative;
+  }
+
+  .ag-courses-item_date-box {
+      font-size: 18px;
+      color: #FFF;
+
+      z-index: 2;
+      position: relative;
+  }
+
+  .ag-courses-item_date {
+      font-weight: bold;
+      color: #f9b234;
+
+      -webkit-transition: color .5s ease;
+      -o-transition: color .5s ease;
+      transition: color .5s ease
+  }
+
+  .ag-courses-item_bg {
+      height: 40px;
+      width: 128px;
+      background-color: #4c49ea;
+
+      z-index: 1;
+      position: absolute;
+      top: -75px;
+      right: -75px;
+
+      border-radius: 50%;
+
+      -webkit-transition: all .5s ease;
+      -o-transition: all .5s ease;
+      transition: all .5s ease;
+  }
+</style>
+<div class="site-section bg-light">
+  <div class="container">
+    
+    
+
+    <div class="container ">
+      <ul class="nav nav-tabs" style="direction: rtl;" id="myTabs">
+        <li class="nav-item">
+          <a class="nav-link active" data-toggle="tab" href="#container1"><h3>تم الدفع</h3></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#container2"><h3>قيد التسوق</h3></a>
+        </li>
+      </ul>
+
+      <div class="tab-content text-right">
+        <div id="container1" class="container tab-pane active">
+          <div class="ag-format-container">
+            <div class="ag-courses_box">
+              {% for o in finish %}
+                <div class="ag-courses_item" >
+                    <a href="{% url 'od' o.id %}" class="ag-courses-item_link">
+                        <!-- <div class="ag-courses-item_bg" style="background-color: #f9b234;"></div> -->
+                        <div class="ag-courses-item_bg" ></div>
+      
+                        <div class="ag-courses-item_title">
+                            {{o.user.first_name}} {{o.user.last_name}}
+                        </div>
+                        <div class="ag-courses-item_date-box">
+                          رقم الطلب. :
+                          <span class="ag-courses-item_date">
+                            {{o.id}}
+                          </span>
+                        </div>
+                        <div class="ag-courses-item_date-box">
+                          التاريخ :
+                          <span class="ag-courses-item_date">                      
+                            {{o.order_date}}
+                          </span>
+                        </div>
+                        <div class="ag-courses-item_date-box">
+                          : أجمالي السعر 
+                          <span class="ag-courses-item_date">                      
+                            {% for t in total %}
+                            {% for k,v in t.items %}
+                            {% if k == o.id %}
+                            {{v}}
+                            {% endif %}
+                            {% endfor %}
+                            {% endfor %}
+                          </span>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        </div>
+        <div id="container2" class="container tab-pane fade">
+          <div class="ag-format-container">
+            <div class="ag-courses_box">
+              {% for o in not_finish %}
+                <div class="ag-courses_item">
+                    <a href="{% url 'od' o.id %}" class="ag-courses-item_link">
+                        <div class="ag-courses-item_bg" style="background-color: #f9b234;"></div>
+                        <!-- <div class="ag-courses-item_bg" ></div> -->
+      
+                        <div class="ag-courses-item_title">
+                            {{o.user.first_name}} {{o.user.last_name}}
+                        </div>
+                        <div class="ag-courses-item_date-box">
+                          رقم الطلب. :
+                          <span class="ag-courses-item_date">
+                            {{o.id}}
+                          </span>
+                        </div>
+                        <div class="ag-courses-item_date-box">
+                          التاريخ :
+                          <span class="ag-courses-item_date">                      
+                            {{o.order_date}}
+                          </span>
+                        </div>
+                        <div class="ag-courses-item_date-box">
+                          أجمالي السعر :
+                          <span class="ag-courses-item_date">                      
+                            {% for t in total %}
+                            {% for k,v in t.items %}
+                            {% if k == o.id %}
+                            {{v}}
+                            {% endif %}
+                            {% endfor %}
+                            {% endfor %}
+                          </span>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="site-section bg-primary py-5">
+  <div class="container">
+    <h2 class="mb-0 text-white text-center">متـــــجــــــــــــــــــر سلـــتـــــــــــــــــي</h2>
+  </div>
+</div>
+
+
+</div>
+{% endblock %}

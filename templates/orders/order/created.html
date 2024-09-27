@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}
+شكراً لك
+{% endblock %}
+{% block content %}
+<h1>شكراً لك</h1>
+<p>لقد تم تلبية طلبك بنجاح : رقم طلبك هو 
+    
+<strong>{{ order.id }}</strong>.</p>
+<br><br>
+    <a href="{% url 'products' %}" class="text-dark">مواصلة التسوق</a>
+</h4>
+{% endblock %}

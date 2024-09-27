@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+ <h1 class="text-center">تغيير كلمة المرور</h1>
+ <h4 class="text-center"><p>مـــــــرحبا بك في صفحة تغيير كلمة المرور</p></h4>
+ <h4 class="text-center">
+ <a href="{% url 'password_change' %}">تغيير كلمة المرور</a>
+</h4>
+{% endblock %}

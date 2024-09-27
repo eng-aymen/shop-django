@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block title %}|عملية الشراء{% endblock %}
+
+{% block content %}
+<div class="my-form container p-5 my-5 rounded border border-warning">
+    <h2 class="text-center">أدخل البيانات المطلوبة لتأكيد الشراء</h2>
+        <hr>
+
+        {% include 'partials/_alerts.html' %}
+{% if not request.user.is_authenticated or request.user.is_anonymous %}
+<h5 class="alert alert-warning text-center">يرجى تسجيل الدخول
+    <br><br>
+    <a href="{% url 'signin' %}" class="text-dark text-center">تسجيل الدخول</a>
+</h5>
+{% elif not order %}
+    <h4 class="alert alert-warning text-center ">
+        شكراً. تمت العملية بنجاح
+    </h4>
+    <a href="{% url 'products' %}" class="btn btn-outline-warning float-right m-1">مواصلة التسوق</a>
+{% else %}
+{% if is_added == True %}
+<form method="POST" style="display: none;">
+{% else %}
+<form method="POST">
+{% endif %}
+    {% csrf_token %}
+
+    <h4 class="text-right"><span class="my-num">{{order.id}}</span> : رقم الطلب 
+    <hr>
+    عدد المنتجات : <span class="my-num">{{order_details.count}}</span>
+    <hr>
+    أجمالي المبلغ :  <span class="my-num">${{total}}</span> 
+    <hr>
+
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="inputship_phone">رقم الشحنة</label>
+            <input type="text" class="form-control text-right" name="ship_phone" id="inputship_phone" required value="{{ship_phone}}">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputship_address">عنوان الشحن</label>
+            <input type="text" class="form-control text-right" name="ship_address" id="inputship_address" required value="{{ship_address}}">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="inputcard_number">رقم الحساب البنكي</label>
+            <input type="text" class="form-control text-right" name="card_number" id="inputcard_number" placeholder="3333 3333 3333 3333" required value="{{card_number}}">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputexpire">تاريخ الإنتهاء</label>
+            <input type="text" class="form-control text-right" name="expire" id="inputexpire" placeholder="mm/YY" required value="{{expire}}">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="inputsecurity_code">كلمة المرور</label>
+            <input type="text" class="form-control text-right" name="security_code" id="inputsecurity_code" placeholder="333" required value="{{security_code}}">
+        </div>
+    </div>
+
+    <a href="{% url 'card' %}" class="btn btn-secondary"><u>تفاصيل الفاتورة</u></a>
+    <button name="btn_payment" type="submit" class="btn btn-warning">شراء</button>
+    
+    
+</form></h4>
+
+{% endif %}
+
+</div>
+{% endblock %}

@@ -1,0 +1,10 @@
+venv/
+
+__pycache__/
+
+migrations/
+
+media/
+
+db.sqlite3
+mysite_data.json

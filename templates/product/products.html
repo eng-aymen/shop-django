@@ -1,0 +1,195 @@
+    {% extends 'base.html' %}
+    {% load static %}
+    {% block title%} Home {% endblock %}
+
+
+    {% block content %}
+        <div class="container-fluid pt-5 pb-3">
+            {% if tm == 'department' %}
+            <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4 text-right"><span class="bg-secondary pr-3"> {{ dept.d_name }}</span></h2>
+            <div class="row px-xl-5">
+                {% for b in br %}
+                {% for c in cat %}
+                {% if c.branch.id == b.id %}
+                {% for p in pro %}
+                {% if p.category.id == c.id %}
+                <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+                    <div class="product-item bg-light mb-4">
+                        <div class="product-img position-relative overflow-hidden">
+                        <img class="img-fluid w-100" src="{{ p.img.url }}" alt="">
+                        <div class="product-action">
+                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
+                                <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
+                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
+                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
+                            </div>
+                        </div>
+                        <div class="text-center py-4">
+                            <a class="h6 text-decoration-none text-truncate" href="{% url 'detail' p.id %}">{{ p.p_name }}</a>
+                            <div class="d-flex align-items-center justify-content-center mt-2">
+                                <h5>${{ p.price }}</h5><h6 class="text-muted ml-2"><del>${{ p.price }}</del></h6>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-center mb-1">
+                                <small class="fa fa-star text-warning mr-1"></small>
+                                <small class="fa fa-star text-warning mr-1"></small>
+                                <small class="fa fa-star text-warning mr-1"></small>
+                                <small class="fa fa-star text-warning mr-1"></small>
+                                <small class="fa fa-star-half-alt text-warning mr-1"></small>
+                                <small>(99)</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+                {% endfor %}
+                
+                </div>
+            {% include "partials/pagination.html" with page=pro %}
+            {% elif tm == 'branch' %}
+            <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4 text-right"><span class="bg-secondary pr-3"> {{ br.b_name }}</span></h2>
+            <div class="row px-xl-5">
+                {% for c in cat %}
+                {% if c.branch.id == br.id %}
+                {% for p in pro %}
+                {% if p.category.id == c.id %}
+                <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+                    <div class="product-item bg-light mb-4">
+                        <div class="product-img position-relative overflow-hidden">
+                        <img class="img-fluid w-100" src="{{ p.img.url }}" alt="">
+                        <div class="product-action">
+                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
+                                <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
+                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
+                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
+                            </div>
+                        </div>
+                        <div class="text-center py-4">
+                            <a class="h6 text-decoration-none text-truncate" href="{% url 'detail' p.id %}">{{ p.p_name }}</a>
+                            <div class="d-flex align-items-center justify-content-center mt-2">
+                                <h5>${{ p.price }}</h5><h6 class="text-muted ml-2"><del>${{ p.price }}</del></h6>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-center mb-1">
+                                <small class="fa fa-star text-warning mr-1"></small>
+                                <small class="fa fa-star text-warning mr-1"></small>
+                                <small class="fa fa-star text-warning mr-1"></small>
+                                <small class="fa fa-star text-warning mr-1"></small>
+                                <small class="fa fa-star-half-alt text-warning mr-1"></small>
+                                <small>(99)</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+            </div>
+            {% elif tm == 'category' %}
+            <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4 text-right"><span class="bg-secondary pr-3"> {{ cat.c_name }}</span></h2>
+            <div class="row px-xl-5">
+                {% for p in pro %}
+                {% if p.category.id == cat.id %}
+                <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+                    <div class="product-item bg-light mb-4">
+                        <div class="product-img position-relative overflow-hidden">
+                        <img class="img-fluid w-100" src="{{ p.img.url }}" alt="">
+                        <div class="product-action">
+                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
+                                <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
+                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
+                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
+                            </div>
+                        </div>
+                        <div class="text-center py-4">
+                            <a class="h6 text-decoration-none text-truncate" href="{% url 'detail' p.id %}">{{ p.p_name }}</a>
+                            <div class="d-flex align-items-center justify-content-center mt-2">
+                                <h5>${{ p.price }}</h5><h6 class="text-muted ml-2"><del>${{ p.price }}</del></h6>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-center mb-1">
+                                <small class="fa fa-star text-warning mr-1"></small>
+                                <small class="fa fa-star text-warning mr-1"></small>
+                                <small class="fa fa-star text-warning mr-1"></small>
+                                <small class="fa fa-star text-warning mr-1"></small>
+                                <small class="fa fa-star-half-alt text-warning mr-1"></small>
+                                <small>(99)</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+            {% elif tm == 's' %}
+            <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">{{ name }}</span></h2>
+            <div class="row px-xl-5">
+                {% for p in pro %}
+                <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+                    <div class="product-item bg-light mb-4">
+                        <div class="product-img position-relative overflow-hidden">
+                        <img class="img-fluid w-100" src="{{ p.img.url }}" alt="">
+                        <div class="product-action">
+                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
+                                <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
+                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
+                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
+                            </div>
+                        </div>
+                        <div class="text-center py-4">
+                            <a class="h6 text-decoration-none text-truncate" href="{% url 'detail' p.id %}">{{ p.p_name }}</a>
+                            <div class="d-flex align-items-center justify-content-center mt-2">
+                                <h5>${{ p.price }}</h5><h6 class="text-muted ml-2"><del>${{ p.price }}</del></h6>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-center mb-1">
+                                <small class="fa fa-star text-warning mr-1"></small>
+                                <small class="fa fa-star text-warning mr-1"></small>
+                                <small class="fa fa-star text-warning mr-1"></small>
+                                <small class="fa fa-star text-warning mr-1"></small>
+                                <small class="fa fa-star-half-alt text-warning mr-1"></small>
+                                <small>(99)</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% elif tm == 't' %}
+            <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4 text-right"><span class="bg-secondary pr-3">جميع المنتجات</span></h2>
+            <div class="row px-xl-5">
+                {% for p in products %}
+                <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+                    <div class="product-item bg-light mb-4">
+                        <div class="product-img position-relative overflow-hidden">
+                        <img class="img-fluid w-100" src="{{ p.img.url }}" alt="">
+                        <div class="product-action">
+                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
+                                <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
+                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
+                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
+                            </div>
+                        </div>
+                        <div class="text-center py-4">
+                            <a class="h6 text-decoration-none text-truncate" href="{% url 'detail' p.id %}">{{ p.p_name }}</a>
+                            <div class="d-flex align-items-center justify-content-center mt-2">
+                                <h5>${{ p.price }}</h5><h6 class="text-muted ml-2"><del>${{ p.price }}</del></h6>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-center mb-1">
+                                <small class="fa fa-star text-warning mr-1"></small>
+                                <small class="fa fa-star text-warning mr-1"></small>
+                                <small class="fa fa-star text-warning mr-1"></small>
+                                <small class="fa fa-star text-warning mr-1"></small>
+                                <small class="fa fa-star-half-alt text-warning mr-1"></small>
+                                <small>(99)</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% include "partials/pagination.html" with page=products %}
+                
+                </div>
+                {% endif %}
+                </div>
+        {% endblock %}
